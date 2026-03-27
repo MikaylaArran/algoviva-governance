@@ -46,3 +46,69 @@ a { color: inherit; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 .fade-in { animation: fadeIn 0.25s ease; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  /* Hero */
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 24px !important;
+  }
+
+  /* Charts grid — 2 cols on mobile */
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Overview 2-col → 1-col */
+  .overview-bottom {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Build & Track form + results stack */
+  .bt-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Regulation Library table — hide region col */
+  .lib-region-col {
+    display: none;
+  }
+
+  /* Country grid — 1 col */
+  .country-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Modal full width */
+  .modal-box {
+    max-width: 100% !important;
+    max-height: 95vh !important;
+    margin: 0 !important;
+  }
+
+  /* Header subtitle hidden on small screens */
+  .header-subtitle {
+    display: none;
+  }
+
+  /* Header right text hidden */
+  .header-right {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .charts-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .hero-num {
+    font-size: 28px !important;
+  }
+
+  .hero-title {
+    font-size: 28px !important;
+  }
+}

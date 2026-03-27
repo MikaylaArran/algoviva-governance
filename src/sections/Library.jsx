@@ -34,7 +34,7 @@ export default function Library() {
   }, [search, filter]);
 
   const thStyle = {
-    padding: '12px 16px',
+    padding: '10px 12px',
     textAlign: 'left',
     fontFamily: 'var(--font-mono)',
     fontSize: 10,
@@ -44,10 +44,11 @@ export default function Library() {
     borderBottom: '2px solid var(--border)',
     background: 'var(--surface)',
     fontWeight: 500,
+    whiteSpace: 'nowrap',
   };
 
   const tdStyle = {
-    padding: '14px 16px',
+    padding: '12px',
     borderBottom: '1px solid var(--surface2)',
     verticalAlign: 'top',
     fontSize: 13,
@@ -56,17 +57,17 @@ export default function Library() {
   return (
     <div>
       <div style={{ marginBottom:20 }}>
-        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:22, marginBottom:6 }}>Regulation Library</h2>
+        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(18px, 4vw, 22px)', marginBottom:6 }}>Regulation Library</h2>
         <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:14 }}>All indexed AI laws, data protection acts, sectoral guidelines, and international standards.</p>
       </div>
 
       {/* Controls */}
-      <div style={{ display:'flex', gap:8, marginBottom:20, flexWrap:'wrap', alignItems:'center' }}>
+      <div style={{ display:'flex', gap:6, marginBottom:16, flexWrap:'wrap', alignItems:'center' }}>
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search by name, country, theme…"
-          style={{ flex:1, minWidth:200, maxWidth:320, padding:'9px 14px', border:'1.5px solid var(--border)', fontFamily:'var(--font)', fontSize:13, outline:'none', background:'white' }}
+          style={{ flex:1, minWidth:180, maxWidth:320, padding:'9px 14px', border:'1.5px solid var(--border)', fontFamily:'var(--font)', fontSize:13, outline:'none', background:'white' }}
         />
         {CAT_FILTERS.map(f => (
           <FilterBtn key={f.id} active={filter === f.id} onClick={() => setFilter(f.id)}>{f.label}</FilterBtn>
@@ -78,57 +79,65 @@ export default function Library() {
         Showing {filtered.length} of {LIBRARY.length} regulations
       </div>
 
-      {/* Table */}
-      <div style={{ border:'1px solid var(--border)', overflow:'hidden' }}>
-        <table style={{ width:'100%', borderCollapse:'collapse', background:'white' }}>
-          <thead>
-            <tr>
-              <th style={thStyle}>Regulation / Standard</th>
-              <th style={thStyle}>Jurisdiction</th>
-              <th style={thStyle}>Status</th>
-              <th style={thStyle}>Region</th>
-              <th style={thStyle}>Document</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length === 0 ? (
+      {/* Desktop table */}
+      <div className="lib-table-wrap" style={{ border:'1px solid var(--border)', overflow:'hidden' }}>
+        <div style={{ overflowX:'auto' }}>
+          <table style={{ width:'100%', borderCollapse:'collapse', background:'white', minWidth:600 }}>
+            <thead>
               <tr>
-                <td colSpan={5} style={{ ...tdStyle, textAlign:'center', color:'var(--text3)', padding:32, fontFamily:'var(--font)' }}>
-                  No regulations match this filter.
-                </td>
+                <th style={thStyle}>Regulation / Standard</th>
+                <th style={thStyle}>Jurisdiction</th>
+                <th style={thStyle}>Status</th>
+                <th style={{ ...thStyle }} className="lib-region-col">Region</th>
+                <th style={thStyle}>Document</th>
               </tr>
-            ) : filtered.map((r, i) => (
-              <tr key={i}
-                onMouseEnter={e => e.currentTarget.style.background = 'var(--surface)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'white'}>
-                <td style={tdStyle}>
-                  <div style={{ fontFamily:'var(--font)', fontWeight:600 }}>
-                    {r.name} <span style={{ color:'var(--text3)', fontWeight:400 }}>({r.year})</span>
-                  </div>
-                  <div style={{ fontFamily:'var(--font)', fontSize:12, color:'var(--text2)', marginTop:4, lineHeight:1.5 }}>{r.desc}</div>
-                  <div style={{ display:'flex', gap:4, flexWrap:'wrap', marginTop:6 }}>
-                    {(r.themes || []).map(t => (
-                      <span key={t} style={{ fontFamily:'var(--font-mono)', fontSize:9, padding:'2px 6px', background:'var(--surface2)', color:'var(--text3)', letterSpacing:'0.5px' }}>{t}</span>
-                    ))}
-                  </div>
-                </td>
-                <td style={{ ...tdStyle, fontFamily:'var(--font)', color:'var(--text2)' }}>{r.country}</td>
-                <td style={tdStyle}><Tag status={r.status} small /></td>
-                <td style={{ ...tdStyle, fontFamily:'var(--font)', fontSize:12, color:'var(--text2)' }}>{r.region}</td>
-                <td style={tdStyle}>
-                  {r.url
-                    ? <a href={r.url} target="_blank" rel="noopener noreferrer"
-                        style={{ color:'#4f8ef7', fontFamily:'var(--font-mono)', fontSize:11, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:3 }}>
-                        ↗ Open
-                      </a>
-                    : <span style={{ color:'var(--text3)' }}>—</span>
-                  }
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={5} style={{ ...tdStyle, textAlign:'center', color:'var(--text3)', padding:32, fontFamily:'var(--font)' }}>
+                    No regulations match this filter.
+                  </td>
+                </tr>
+              ) : filtered.map((r, i) => (
+                <tr key={i}
+                  onMouseEnter={e => e.currentTarget.style.background = 'var(--surface)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'white'}>
+                  <td style={tdStyle}>
+                    <div style={{ fontFamily:'var(--font)', fontWeight:600 }}>
+                      {r.name} <span style={{ color:'var(--text3)', fontWeight:400 }}>({r.year})</span>
+                    </div>
+                    <div style={{ fontFamily:'var(--font)', fontSize:12, color:'var(--text2)', marginTop:4, lineHeight:1.5 }}>{r.desc}</div>
+                    <div style={{ display:'flex', gap:4, flexWrap:'wrap', marginTop:6 }}>
+                      {(r.themes || []).map(t => (
+                        <span key={t} style={{ fontFamily:'var(--font-mono)', fontSize:9, padding:'2px 6px', background:'var(--surface2)', color:'var(--text3)', letterSpacing:'0.5px' }}>{t}</span>
+                      ))}
+                    </div>
+                  </td>
+                  <td style={{ ...tdStyle, fontFamily:'var(--font)', color:'var(--text2)', whiteSpace:'nowrap' }}>{r.country}</td>
+                  <td style={{ ...tdStyle, whiteSpace:'nowrap' }}><Tag status={r.status} small /></td>
+                  <td style={{ ...tdStyle, fontFamily:'var(--font)', fontSize:12, color:'var(--text2)', whiteSpace:'nowrap' }} className="lib-region-col">{r.region}</td>
+                  <td style={{ ...tdStyle, whiteSpace:'nowrap' }}>
+                    {r.url
+                      ? <a href={r.url} target="_blank" rel="noopener noreferrer"
+                          style={{ color:'#4f8ef7', fontFamily:'var(--font-mono)', fontSize:11, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:3 }}>
+                          ↗ Open
+                        </a>
+                      : <span style={{ color:'var(--text3)' }}>—</span>
+                    }
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .lib-region-col { display: none !important; }
+        }
+      `}</style>
     </div>
   );
 }

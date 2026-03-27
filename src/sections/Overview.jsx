@@ -33,15 +33,15 @@ function DonutChart({ label, data }) {
 
   return (
     <div style={{ background:'white', border:'1px solid var(--border)', padding:20, textAlign:'center' }}>
-      <div style={{ fontFamily:'var(--font)', fontWeight:600, fontSize:13, marginBottom:16, color:'var(--text)' }}>{label}</div>
-      <div style={{ position:'relative', width:100, height:100, margin:'0 auto 12px' }}>
+      <div style={{ fontFamily:'var(--font)', fontWeight:600, fontSize:12, marginBottom:12, color:'var(--text)' }}>{label}</div>
+      <div style={{ position:'relative', width:80, height:80, margin:'0 auto 10px' }}>
         <svg viewBox="0 0 100 100" style={{ width:'100%', height:'100%', transform:'rotate(-90deg)' }}>
           {paths}
           <circle cx={cx} cy={cy} r={24} fill="white" />
         </svg>
         <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', textAlign:'center' }}>
-          <div style={{ fontFamily:'var(--font-display)', fontSize:22, fontWeight:700, lineHeight:1 }}>{data.total}</div>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--text3)' }}>countries</div>
+          <div style={{ fontFamily:'var(--font-display)', fontSize:18, fontWeight:700, lineHeight:1 }}>{data.total}</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--text3)' }}>total</div>
         </div>
       </div>
       <div style={{ textAlign:'left' }}>
@@ -51,8 +51,8 @@ function DonutChart({ label, data }) {
           { label:`Guidelines (${data.guidelines})`, color: COLORS.guidelines },
           { label:`Not Tracked (${notTracked})`,     color: COLORS.not_tracked },
         ].map(l => (
-          <div key={l.label} style={{ display:'flex', alignItems:'center', gap:6, fontSize:11, color:'var(--text2)', marginBottom:3, fontFamily:'var(--font)' }}>
-            <div style={{ width:8, height:8, background:l.color, flexShrink:0 }} />
+          <div key={l.label} style={{ display:'flex', alignItems:'center', gap:5, fontSize:10, color:'var(--text2)', marginBottom:2, fontFamily:'var(--font)' }}>
+            <div style={{ width:7, height:7, background:l.color, flexShrink:0 }} />
             {l.label}
           </div>
         ))}
@@ -75,40 +75,25 @@ export default function Overview({ onNav }) {
       <div style={{
         background: 'var(--ink)',
         color: 'white',
-        padding: 48,
+        padding: 'clamp(24px, 5vw, 48px)',
         marginBottom: 32,
         position: 'relative',
         overflow: 'hidden',
       }}>
-        <div style={{
-          position: 'absolute',
-          top: '-30%',
-          right: '-5%',
-          width: 600,
-          height: 600,
-          background: 'radial-gradient(circle, rgba(79,142,247,0.15) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
-        <div style={{
-          position: 'absolute',
-          bottom: '-20%',
-          left: '30%',
-          width: 400,
-          height: 400,
-          background: 'radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
+        <div style={{ position:'absolute', top:'-30%', right:'-5%', width:500, height:500, background:'radial-gradient(circle, rgba(79,142,247,0.15) 0%, transparent 70%)', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:'-20%', left:'30%', width:400, height:400, background:'radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%)', pointerEvents:'none' }} />
 
         <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:3, textTransform:'uppercase', color:'rgba(255,255,255,0.4)', marginBottom:16 }}>
           AlgoViva — AI Governance Intelligence
         </div>
-        <h1 style={{ fontFamily:'var(--font-display)', fontSize:40, fontWeight:800, lineHeight:1.15, letterSpacing:'-0.5px', color:'white', maxWidth:560, marginBottom:16 }}>
+        <h1 className="hero-title" style={{ fontFamily:'var(--font-display)', fontSize:'clamp(28px, 5vw, 40px)', fontWeight:800, lineHeight:1.15, letterSpacing:'-0.5px', color:'white', maxWidth:560, marginBottom:16 }}>
           Know your obligations before you build.
         </h1>
-        <p style={{ fontFamily:'var(--font)', color:'rgba(255,255,255,0.6)', maxWidth:520, fontSize:15, lineHeight:1.7 }}>
+        <p style={{ fontFamily:'var(--font)', color:'rgba(255,255,255,0.6)', maxWidth:520, fontSize:'clamp(13px, 2vw, 15px)', lineHeight:1.7 }}>
           The AI regulatory landscape is accelerating. AlgoViva maps every jurisdiction, interprets every framework, and generates a tailored compliance brief for your product — so you ship with confidence, not guesswork.
         </p>
-        <div style={{ display:'flex', gap:48, marginTop:40, paddingTop:32, borderTop:'1px solid rgba(255,255,255,0.08)' }}>
+
+        <div className="hero-stats" style={{ display:'flex', gap:'clamp(20px, 4vw, 48px)', marginTop:40, paddingTop:32, borderTop:'1px solid rgba(255,255,255,0.08)', flexWrap:'wrap' }}>
           {[
             { num:'54',  label:'African Countries Mapped' },
             { num:'28',  label:'Jurisdictions with Checklists' },
@@ -116,7 +101,7 @@ export default function Overview({ onNav }) {
             { num:'6',   label:'Sectors Covered' },
           ].map(s => (
             <div key={s.label}>
-              <div style={{ fontFamily:'var(--font-display)', fontSize:40, fontWeight:800, color:'white', lineHeight:1 }}>{s.num}</div>
+              <div className="hero-num" style={{ fontFamily:'var(--font-display)', fontSize:'clamp(28px, 5vw, 40px)', fontWeight:800, color:'white', lineHeight:1 }}>{s.num}</div>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'1.5px', textTransform:'uppercase', color:'rgba(255,255,255,0.4)', marginTop:4 }}>{s.label}</div>
             </div>
           ))}
@@ -125,7 +110,7 @@ export default function Overview({ onNav }) {
 
       {/* Charts */}
       <SectionLabel style={{ marginBottom:12 }}>Regulatory Maturity by Region</SectionLabel>
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(6,1fr)', gap:16, marginBottom:32 }}>
+      <div className="charts-grid" style={{ display:'grid', gridTemplateColumns:'repeat(6, 1fr)', gap:12, marginBottom:32 }}>
         <DonutChart label="Global" data={global} />
         {Object.entries(REGION_STATS).map(([region, data]) => (
           <DonutChart key={region} label={region} data={data} />
@@ -133,17 +118,17 @@ export default function Overview({ onNav }) {
       </div>
 
       {/* Feed + Quick Actions */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20 }}>
+      <div className="overview-bottom" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20 }}>
         <div>
           <SectionLabel style={{ marginBottom:12 }}>Latest Regulatory Moves</SectionLabel>
-          <div style={{ background:'white', border:'1px solid var(--border)', padding:'0 24px' }}>
+          <div style={{ background:'white', border:'1px solid var(--border)', padding:'0 20px' }}>
             {INTEL_ITEMS.slice(0, 5).map((item, i) => (
-              <div key={i} style={{ display:'flex', gap:16, padding:'16px 0', borderBottom: i < 4 ? '1px solid var(--border)' : 'none', alignItems:'flex-start' }}>
+              <div key={i} style={{ display:'flex', gap:14, padding:'14px 0', borderBottom: i < 4 ? '1px solid var(--border)' : 'none', alignItems:'flex-start' }}>
                 <div style={{ width:3, alignSelf:'stretch', background: TYPE_COLORS[item.type] || 'var(--border)', flexShrink:0 }} />
-                <div style={{ flex:1 }}>
-                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
+                <div style={{ flex:1, minWidth:0 }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4, gap:8, flexWrap:'wrap' }}>
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--text3)' }}>{item.country} · {item.date}</span>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, padding:'2px 6px', border:'1px solid currentColor', color: TYPE_COLORS[item.type], textTransform:'uppercase', letterSpacing:1 }}>{item.type}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, padding:'2px 6px', border:'1px solid currentColor', color: TYPE_COLORS[item.type], textTransform:'uppercase', letterSpacing:1, flexShrink:0 }}>{item.type}</span>
                   </div>
                   <div style={{ fontFamily:'var(--font)', fontWeight:500, fontSize:13, color:'var(--text)', lineHeight:1.5 }}>{item.briefing.split('.')[0]}.</div>
                 </div>
@@ -161,17 +146,28 @@ export default function Overview({ onNav }) {
               { id:'intel',      color:'#b45309', label:'Intelligence', title:'Read the Intelligence Feed',    desc:"Synthesised regulatory intelligence with source news — what's changing and what it means for you." },
             ].map(q => (
               <div key={q.id} onClick={() => onNav(q.id)}
-                style={{ background:'white', border:'1px solid var(--border)', borderLeft:`3px solid ${q.color}`, padding:20, cursor:'pointer', transition:'box-shadow 0.2s' }}
+                style={{ background:'white', border:'1px solid var(--border)', borderLeft:`3px solid ${q.color}`, padding:18, cursor:'pointer', transition:'box-shadow 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--shadow)'}
                 onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
                 <SectionLabel style={{ color:q.color }}>{q.label}</SectionLabel>
-                <div style={{ fontFamily:'var(--font)', fontWeight:600, fontSize:14, marginBottom:4 }}>{q.title}</div>
-                <div style={{ fontFamily:'var(--font)', fontSize:13, color:'var(--text2)', lineHeight:1.5 }}>{q.desc}</div>
+                <div style={{ fontFamily:'var(--font)', fontWeight:600, fontSize:13, marginBottom:4 }}>{q.title}</div>
+                <div style={{ fontFamily:'var(--font)', fontSize:12, color:'var(--text2)', lineHeight:1.5 }}>{q.desc}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Mobile styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          .charts-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .overview-bottom { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .charts-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
     </div>
   );
 }

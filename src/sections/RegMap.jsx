@@ -30,13 +30,13 @@ export default function RegMap({ onNav }) {
   return (
     <div>
       <div style={{ marginBottom:24 }}>
-        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:22, marginBottom:6 }}>Global AI Regulatory Map</h2>
+        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(18px, 4vw, 22px)', marginBottom:6 }}>Global AI Regulatory Map</h2>
         <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:14 }}>Click any country to see its regulatory profile and jump to a compliance check.</p>
       </div>
 
       {/* Filters */}
-      <div style={{ display:'flex', gap:8, marginBottom:24, flexWrap:'wrap' }}>
-        <FilterBtn active={regionFilter === 'all'} onClick={() => setRegionFilter('all')}>All Regions</FilterBtn>
+      <div style={{ display:'flex', gap:6, marginBottom:20, flexWrap:'wrap' }}>
+        <FilterBtn active={regionFilter === 'all'} onClick={() => setRegionFilter('all')}>All</FilterBtn>
         {REGIONS.map(r => (
           <FilterBtn key={r} active={regionFilter === r} onClick={() => setRegionFilter(r)}>{r}</FilterBtn>
         ))}
@@ -47,10 +47,10 @@ export default function RegMap({ onNav }) {
       </div>
 
       {/* Grid */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))', gap:12 }}>
+      <div className="country-grid" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))', gap:10 }}>
         {filtered.map(c => (
           <div key={c.name} onClick={() => setSelectedCountry(c)}
-            style={{ background:'white', border:'1px solid var(--border)', borderLeft:`3px solid ${borderColors[c.status] || 'var(--border)'}`, padding:16, cursor:'pointer', transition:'all 0.2s' }}
+            style={{ background:'white', border:'1px solid var(--border)', borderLeft:`3px solid ${borderColors[c.status] || 'var(--border)'}`, padding:14, cursor:'pointer', transition:'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.boxShadow = 'var(--shadow)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
             onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}>
             <div style={{ fontFamily:'var(--font)', fontWeight:600, fontSize:13, marginBottom:4 }}>{c.name}</div>
@@ -96,6 +96,15 @@ export default function RegMap({ onNav }) {
           </>
         )}
       </Modal>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .country-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .country-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   );
 }

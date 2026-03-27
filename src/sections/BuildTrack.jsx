@@ -43,9 +43,9 @@ function RegBlock({ reg, stageIdx, checked, onToggle, onCite }) {
   return (
     <div style={{ border:'1px solid var(--border)', marginBottom:12, background:'white' }}>
       <div onClick={() => setOpen(o => !o)}
-        style={{ display:'flex', alignItems:'center', gap:12, padding:'14px 16px', cursor:'pointer', background:'var(--surface)', userSelect:'none' }}>
+        style={{ display:'flex', alignItems:'center', gap:10, padding:'12px 14px', cursor:'pointer', background:'var(--surface)', userSelect:'none', flexWrap:'wrap' }}>
         <Tag status={reg.status} small />
-        <div style={{ fontFamily:'var(--font)', fontWeight:600, fontSize:13, flex:1 }}>{reg.title}</div>
+        <div style={{ fontFamily:'var(--font)', fontWeight:600, fontSize:13, flex:1, minWidth:120 }}>{reg.title}</div>
         {reg.url && (
           <a href={reg.url} target="_blank" rel="noopener noreferrer"
             onClick={e => e.stopPropagation()}
@@ -57,7 +57,7 @@ function RegBlock({ reg, stageIdx, checked, onToggle, onCite }) {
       </div>
 
       {open && (
-        <div style={{ padding:16, borderTop:'1px solid var(--border)' }}>
+        <div style={{ padding:14, borderTop:'1px solid var(--border)' }}>
           {activeObs.map(ob => (
             <div key={ob.id} style={{ display:'flex', alignItems:'flex-start', gap:10, padding:'10px 0', borderBottom:'1px solid var(--surface2)' }}>
               <input type="checkbox" checked={!!checked[ob.id]} onChange={() => onToggle(ob.id)}
@@ -268,12 +268,12 @@ export default function BuildTrack() {
 
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ marginBottom:24 }}>
         <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:22, marginBottom:6 }}>Build &amp; Track</h2>
         <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:14 }}>Complete your profile, run the compliance check, and track your obligations — all in one place.</p>
       </div>
 
-      <div style={{ display:'grid', gridTemplateColumns:'360px 1fr', gap:24, alignItems:'flex-start' }}>
+      <div className="bt-layout" style={{ display:'grid', gridTemplateColumns:'360px 1fr', gap:24, alignItems:'flex-start' }}>
 
         {/* ── FORM ── */}
         <div style={{ background:'white', border:'1px solid var(--border)', padding:24 }}>
@@ -282,7 +282,7 @@ export default function BuildTrack() {
           <div style={{ display:'flex', border:'1.5px solid var(--border)', marginBottom:12, overflow:'hidden' }}>
             {STAGES.map(s => (
               <button key={s.id} onClick={() => setStage(s.id)}
-                style={{ flex:1, padding:'10px 4px', fontFamily:'var(--font)', fontSize:9, fontWeight:600, textAlign:'center', cursor:'pointer', background: stage === s.id ? 'var(--ink)' : 'none', border:'none', borderRight:'1px solid var(--border)', color: stage === s.id ? 'white' : 'var(--text3)', transition:'all 0.15s', lineHeight:1.4 }}>
+                style={{ flex:1, padding:'10px 2px', fontFamily:'var(--font)', fontSize:9, fontWeight:600, textAlign:'center', cursor:'pointer', background: stage === s.id ? 'var(--ink)' : 'none', border:'none', borderRight:'1px solid var(--border)', color: stage === s.id ? 'white' : 'var(--text3)', transition:'all 0.15s', lineHeight:1.4 }}>
                 <span style={{ display:'block', fontFamily:'var(--font-mono)', fontSize:8, opacity:0.6, marginBottom:2 }}>{s.num}</span>
                 {s.label}
               </button>
@@ -336,7 +336,7 @@ export default function BuildTrack() {
         {/* ── RESULTS ── */}
         <div>
           {!results ? (
-            <div style={{ background:'white', border:'2px dashed var(--border)', padding:48, textAlign:'center' }}>
+            <div style={{ background:'white', border:'2px dashed var(--border)', padding:'clamp(24px, 5vw, 48px)', textAlign:'center' }}>
               <div style={{ fontSize:36, marginBottom:12 }}>⚖</div>
               <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:16, marginBottom:8 }}>Your compliance brief will appear here</h3>
               <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:13, lineHeight:1.6 }}>Complete the form and run the check to see your tailored obligations, stage-by-stage requirements, and tracking checklist.</p>
@@ -344,7 +344,7 @@ export default function BuildTrack() {
           ) : (
             <>
               <div style={{ background:'var(--ink)', color:'white', padding:'24px 28px' }}>
-                <h2 style={{ fontFamily:'var(--font-display)', color:'white', fontSize:18, fontWeight:700, marginBottom:4 }}>
+                <h2 style={{ fontFamily:'var(--font-display)', color:'white', fontSize:'clamp(15px, 3vw, 18px)', fontWeight:700, marginBottom:4 }}>
                   {results.country} · {SECTORS.find(s => s.value === results.sector)?.label} · {STAGES.find(s => s.id === stage)?.label} Stage
                 </h2>
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(255,255,255,0.5)' }}>
@@ -352,14 +352,14 @@ export default function BuildTrack() {
                   Generated {new Date().toLocaleDateString('en-ZA', { day:'numeric', month:'long', year:'numeric' })}
                 </div>
 
-                <div style={{ display:'flex', gap:32, marginTop:20 }}>
+                <div style={{ display:'flex', gap:'clamp(16px, 3vw, 32px)', marginTop:20, flexWrap:'wrap' }}>
                   {[
                     { n: counts.must,                l: 'MUST obligations' },
                     { n: counts.should,              l: 'SHOULD obligations' },
                     { n: results.regulations.length, l: 'Regulations / Standards' },
                   ].map(k => (
                     <div key={k.l}>
-                      <div style={{ fontFamily:'var(--font-display)', fontSize:32, fontWeight:800, color:'white', lineHeight:1 }}>{k.n}</div>
+                      <div style={{ fontFamily:'var(--font-display)', fontSize:'clamp(24px, 4vw, 32px)', fontWeight:800, color:'white', lineHeight:1 }}>{k.n}</div>
                       <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(255,255,255,0.4)', letterSpacing:1 }}>{k.l}</div>
                     </div>
                   ))}
@@ -422,6 +422,12 @@ export default function BuildTrack() {
           </>
         )}
       </Modal>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .bt-layout { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   );
 }

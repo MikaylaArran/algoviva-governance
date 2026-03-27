@@ -10,17 +10,21 @@ export default function App() {
   const [section, setSection] = useState('overview');
 
   const sections = {
-    overview: <Overview onNav={setSection} />,
-    map: <RegMap onNav={setSection} />,
+    overview:   <Overview onNav={setSection} />,
+    map:        <RegMap onNav={setSection} />,
     buildtrack: <BuildTrack />,
-    library: <Library />,
-    intel: <IntelFeed />,
+    library:    <Library />,
+    intel:      <IntelFeed />,
   };
 
   return (
     <div>
       <Header activeSection={section} onNav={setSection} />
-      <main style={{ maxWidth: 1400, margin: '0 auto', padding: '32px' }}>
+      <main style={{
+        maxWidth: 1400,
+        margin: '0 auto',
+        padding: 'clamp(16px, 4vw, 32px)',
+      }}>
         <div key={section} className="fade-in">
           {sections[section]}
         </div>
