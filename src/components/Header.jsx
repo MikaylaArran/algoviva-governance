@@ -81,7 +81,7 @@ export default function Header({ activeSection, onNav }) {
               padding: '0 18px',
               height: 44,
               cursor: 'pointer',
-              borderBottom: activeSection === s.id ? '2px solid var(--accent2)' : '2px solid transparent',
+              borderBottom: activeSection === s.id ? '2px solid #4f8ef7' : '2px solid transparent',
               transition: 'all 0.15s',
               whiteSpace: 'nowrap',
             }}

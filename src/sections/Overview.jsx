@@ -46,10 +46,10 @@ function DonutChart({ label, data }) {
       </div>
       <div style={{ textAlign:'left' }}>
         {[
-          { label:`Enacted (${data.enacted})`,         color: COLORS.enacted },
-          { label:`Draft (${data.draft})`,             color: COLORS.draft },
-          { label:`Guidelines (${data.guidelines})`,   color: COLORS.guidelines },
-          { label:`Not Tracked (${notTracked})`,       color: COLORS.not_tracked },
+          { label:`Enacted (${data.enacted})`,       color: COLORS.enacted },
+          { label:`Draft (${data.draft})`,           color: COLORS.draft },
+          { label:`Guidelines (${data.guidelines})`, color: COLORS.guidelines },
+          { label:`Not Tracked (${notTracked})`,     color: COLORS.not_tracked },
         ].map(l => (
           <div key={l.label} style={{ display:'flex', alignItems:'center', gap:6, fontSize:11, color:'var(--text2)', marginBottom:3, fontFamily:'var(--font)' }}>
             <div style={{ width:8, height:8, background:l.color, flexShrink:0 }} />
@@ -72,8 +72,33 @@ export default function Overview({ onNav }) {
   return (
     <div>
       {/* Hero */}
-      <div style={{ background:'var(--ink)', color:'white', padding:48, marginBottom:32, position:'relative', overflow:'hidden' }}>
-        <div style={{ position:'absolute', top:'-50%', right:'-10%', width:500, height:500, background:'radial-gradient(circle, rgba(45,92,66,0.25) 0%, transparent 70%)', pointerEvents:'none' }} />
+      <div style={{
+        background: 'var(--ink)',
+        color: 'white',
+        padding: 48,
+        marginBottom: 32,
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: '-30%',
+          right: '-5%',
+          width: 600,
+          height: 600,
+          background: 'radial-gradient(circle, rgba(79,142,247,0.15) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '-20%',
+          left: '30%',
+          width: 400,
+          height: 400,
+          background: 'radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+
         <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:3, textTransform:'uppercase', color:'rgba(255,255,255,0.4)', marginBottom:16 }}>
           AlgoViva — AI Governance Intelligence
         </div>
@@ -83,7 +108,7 @@ export default function Overview({ onNav }) {
         <p style={{ fontFamily:'var(--font)', color:'rgba(255,255,255,0.6)', maxWidth:520, fontSize:15, lineHeight:1.7 }}>
           The AI regulatory landscape is accelerating. AlgoViva maps every jurisdiction, interprets every framework, and generates a tailored compliance brief for your product — so you ship with confidence, not guesswork.
         </p>
-        <div style={{ display:'flex', gap:48, marginTop:40, paddingTop:32, borderTop:'1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ display:'flex', gap:48, marginTop:40, paddingTop:32, borderTop:'1px solid rgba(255,255,255,0.08)' }}>
           {[
             { num:'54',  label:'African Countries Mapped' },
             { num:'28',  label:'Jurisdictions with Checklists' },
@@ -131,9 +156,9 @@ export default function Overview({ onNav }) {
           <SectionLabel style={{ marginBottom:12 }}>Quick Actions</SectionLabel>
           <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
             {[
-              { id:'buildtrack', color:'var(--accent2)', label:'Most Used',   title:'Run a Compliance Check',      desc:'Select your market, sector, and development stage to get a tailored obligation checklist.' },
-              { id:'library',    color:'var(--blue)',    label:'Reference',   title:'Browse the Regulation Library', desc:'35+ indexed regulations, standards, and frameworks searchable by country, sector, and theme.' },
-              { id:'intel',      color:'var(--amber)',   label:'Intelligence', title:'Read the Intelligence Feed',   desc:"Synthesised regulatory intelligence with source news — what's changing and what it means for you." },
+              { id:'buildtrack', color:'#4f8ef7', label:'Most Used',    title:'Run a Compliance Check',       desc:'Select your market, sector, and development stage to get a tailored obligation checklist.' },
+              { id:'library',    color:'#2d5c42', label:'Reference',    title:'Browse the Regulation Library', desc:'35+ indexed regulations, standards, and frameworks searchable by country, sector, and theme.' },
+              { id:'intel',      color:'#b45309', label:'Intelligence', title:'Read the Intelligence Feed',    desc:"Synthesised regulatory intelligence with source news — what's changing and what it means for you." },
             ].map(q => (
               <div key={q.id} onClick={() => onNav(q.id)}
                 style={{ background:'white', border:'1px solid var(--border)', borderLeft:`3px solid ${q.color}`, padding:20, cursor:'pointer', transition:'box-shadow 0.2s' }}

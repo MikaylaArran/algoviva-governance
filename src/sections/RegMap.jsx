@@ -17,9 +17,9 @@ export default function RegMap({ onNav }) {
   });
 
   const borderColors = {
-    enacted:       'var(--accent)',
-    draft:         'var(--amber)',
-    guidelines:    'var(--blue)',
+    enacted:       '#1a3a2a',
+    draft:         '#b45309',
+    guidelines:    '#1e3a5f',
     'not-tracked': 'var(--border)',
   };
 

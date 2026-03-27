@@ -3,10 +3,10 @@ import { INTEL_ITEMS } from '../data';
 import { FilterBtn } from '../components/UI';
 
 const TYPE_COLORS = {
-  enacted:  'var(--accent)',
-  draft:    'var(--amber)',
-  alert:    'var(--red)',
-  standard: 'var(--blue)',
+  enacted:  '#1a3a2a',
+  draft:    '#b45309',
+  alert:    '#c0392b',
+  standard: '#1e3a5f',
 };
 
 const TYPE_LABELS = {
@@ -56,7 +56,7 @@ function IntelItem({ item }) {
           <span style={{ marginLeft:'auto', fontFamily:'var(--font-mono)', fontSize:10, color:'var(--text3)' }}>{item.region}</span>
         </div>
 
-        {/* Briefing — the intelligence layer */}
+        {/* Briefing */}
         <div style={{
           fontFamily: 'var(--font-display)',
           fontSize: 16,
@@ -86,7 +86,7 @@ function IntelItem({ item }) {
         </button>
       </div>
 
-      {/* Sources — the evidence layer */}
+      {/* Sources */}
       {open && (
         <div style={{ borderTop:'1px solid var(--surface2)', background:'var(--surface)' }}>
           {item.sources.map((s, i) => (
@@ -95,7 +95,7 @@ function IntelItem({ item }) {
               borderBottom: i < item.sources.length - 1 ? '1px solid var(--surface2)' : 'none',
             }}>
               <a href={s.url} target="_blank" rel="noopener noreferrer"
-                style={{ color:'var(--accent2)', textDecoration:'none', fontFamily:'var(--font)', fontWeight:600, fontSize:13 }}>
+                style={{ color:'#4f8ef7', textDecoration:'none', fontFamily:'var(--font)', fontWeight:600, fontSize:13 }}>
                 {s.title} ↗
               </a>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--text3)', marginTop:3 }}>{s.url}</div>

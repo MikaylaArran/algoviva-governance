@@ -51,16 +51,13 @@ export default function Library() {
     borderBottom: '1px solid var(--surface2)',
     verticalAlign: 'top',
     fontSize: 13,
-    fontFamily: 'var(--font)',
   };
 
   return (
     <div>
       <div style={{ marginBottom:20 }}>
         <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:22, marginBottom:6 }}>Regulation Library</h2>
-        <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:14 }}>
-          All indexed AI laws, data protection acts, sectoral guidelines, and international standards.
-        </p>
+        <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:14 }}>All indexed AI laws, data protection acts, sectoral guidelines, and international standards.</p>
       </div>
 
       {/* Controls */}
@@ -96,7 +93,7 @@ export default function Library() {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={5} style={{ ...tdStyle, textAlign:'center', color:'var(--text3)', padding:32 }}>
+                <td colSpan={5} style={{ ...tdStyle, textAlign:'center', color:'var(--text3)', padding:32, fontFamily:'var(--font)' }}>
                   No regulations match this filter.
                 </td>
               </tr>
@@ -105,24 +102,23 @@ export default function Library() {
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--surface)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'white'}>
                 <td style={tdStyle}>
-                  <div style={{ fontWeight:600, marginBottom:4 }}>
-                    {r.name}{' '}
-                    <span style={{ color:'var(--text3)', fontWeight:400 }}>({r.year})</span>
+                  <div style={{ fontFamily:'var(--font)', fontWeight:600 }}>
+                    {r.name} <span style={{ color:'var(--text3)', fontWeight:400 }}>({r.year})</span>
                   </div>
-                  <div style={{ fontSize:12, color:'var(--text2)', lineHeight:1.5, marginBottom:6 }}>{r.desc}</div>
-                  <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
+                  <div style={{ fontFamily:'var(--font)', fontSize:12, color:'var(--text2)', marginTop:4, lineHeight:1.5 }}>{r.desc}</div>
+                  <div style={{ display:'flex', gap:4, flexWrap:'wrap', marginTop:6 }}>
                     {(r.themes || []).map(t => (
                       <span key={t} style={{ fontFamily:'var(--font-mono)', fontSize:9, padding:'2px 6px', background:'var(--surface2)', color:'var(--text3)', letterSpacing:'0.5px' }}>{t}</span>
                     ))}
                   </div>
                 </td>
-                <td style={{ ...tdStyle, fontSize:13, color:'var(--text2)' }}>{r.country}</td>
+                <td style={{ ...tdStyle, fontFamily:'var(--font)', color:'var(--text2)' }}>{r.country}</td>
                 <td style={tdStyle}><Tag status={r.status} small /></td>
-                <td style={{ ...tdStyle, fontSize:12, color:'var(--text2)' }}>{r.region}</td>
+                <td style={{ ...tdStyle, fontFamily:'var(--font)', fontSize:12, color:'var(--text2)' }}>{r.region}</td>
                 <td style={tdStyle}>
                   {r.url
                     ? <a href={r.url} target="_blank" rel="noopener noreferrer"
-                        style={{ color:'var(--accent2)', fontFamily:'var(--font-mono)', fontSize:11, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:3 }}>
+                        style={{ color:'#4f8ef7', fontFamily:'var(--font-mono)', fontSize:11, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:3 }}>
                         ↗ Open
                       </a>
                     : <span style={{ color:'var(--text3)' }}>—</span>

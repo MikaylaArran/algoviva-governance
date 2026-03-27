@@ -1,6 +1,7 @@
 :root {
-  --ink: #0d0f12;
-  --ink2: #1a1d23;
+  --ink: #0f1729;
+  --ink2: #1a2744;
+  --ink3: #243058;
   --surface: #f5f5f5;
   --surface2: #ebebeb;
   --surface3: #e0e0e0;
@@ -18,7 +19,7 @@
   --blue: #1e3a5f;
   --blue-light: #e8eef6;
   --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
 
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Inter Tight', 'Inter', sans-serif;

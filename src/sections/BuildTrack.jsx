@@ -49,7 +49,7 @@ function RegBlock({ reg, stageIdx, checked, onToggle, onCite }) {
         {reg.url && (
           <a href={reg.url} target="_blank" rel="noopener noreferrer"
             onClick={e => e.stopPropagation()}
-            style={{ color:'var(--accent2)', fontFamily:'var(--font-mono)', fontSize:11, textDecoration:'none', whiteSpace:'nowrap' }}>
+            style={{ color:'#4f8ef7', fontFamily:'var(--font-mono)', fontSize:11, textDecoration:'none', whiteSpace:'nowrap' }}>
             ↗ Full document
           </a>
         )}
@@ -61,7 +61,7 @@ function RegBlock({ reg, stageIdx, checked, onToggle, onCite }) {
           {activeObs.map(ob => (
             <div key={ob.id} style={{ display:'flex', alignItems:'flex-start', gap:10, padding:'10px 0', borderBottom:'1px solid var(--surface2)' }}>
               <input type="checkbox" checked={!!checked[ob.id]} onChange={() => onToggle(ob.id)}
-                style={{ width:15, height:15, marginTop:2, flexShrink:0, accentColor:'var(--accent2)', cursor:'pointer' }} />
+                style={{ width:15, height:15, marginTop:2, flexShrink:0, accentColor:'#4f8ef7', cursor:'pointer' }} />
               <div style={{ flex:1 }}>
                 <div style={{ fontFamily:'var(--font)', fontSize:13, lineHeight:1.5, textDecoration: checked[ob.id] ? 'line-through' : 'none', color: checked[ob.id] ? 'var(--text3)' : 'var(--text)' }}>
                   <Badge severity={ob.severity} />
@@ -121,8 +121,8 @@ function GapPanel({ regulations, stageIdx, checked }) {
 
   if (gaps.length === 0) {
     return (
-      <div style={{ borderLeft:'3px solid var(--accent2)', background:'var(--accent-light)', padding:'16px 20px', marginTop:20 }}>
-        <div style={{ fontFamily:'var(--font)', color:'var(--accent2)', fontWeight:600, fontSize:13 }}>
+      <div style={{ borderLeft:'3px solid #2d5c42', background:'#e6f0ea', padding:'16px 20px', marginTop:20 }}>
+        <div style={{ fontFamily:'var(--font)', color:'#2d5c42', fontWeight:600, fontSize:13 }}>
           ✓ All MUST obligations addressed for this stage
         </div>
       </div>
@@ -130,13 +130,13 @@ function GapPanel({ regulations, stageIdx, checked }) {
   }
 
   return (
-    <div style={{ borderLeft:'3px solid var(--red)', background:'var(--red-light)', padding:'16px 20px', marginTop:20 }}>
-      <div style={{ fontFamily:'var(--font)', color:'var(--red)', fontWeight:600, fontSize:13, marginBottom:12 }}>
+    <div style={{ borderLeft:'3px solid #c0392b', background:'#fdf0ee', padding:'16px 20px', marginTop:20 }}>
+      <div style={{ fontFamily:'var(--font)', color:'#c0392b', fontWeight:600, fontSize:13, marginBottom:12 }}>
         {stageVerb[STAGE_ORDER[stageIdx]]}: {gaps.length} unresolved MUST obligation{gaps.length !== 1 ? 's' : ''}
       </div>
       {gaps.map(g => (
         <div key={g.id} style={{ display:'flex', gap:8, fontFamily:'var(--font)', fontSize:12, marginBottom:8, alignItems:'flex-start', lineHeight:1.5 }}>
-          <span style={{ color:'var(--red)', flexShrink:0 }}>→</span>
+          <span style={{ color:'#c0392b', flexShrink:0 }}>→</span>
           {g.text}
         </div>
       ))}
@@ -161,7 +161,7 @@ body{font-family:'Inter',sans-serif;max-width:720px;margin:40px auto;color:#111;
 h1{font-size:20px;font-weight:700;margin-bottom:4px;}
 .meta{color:#666;font-size:12px;margin-bottom:28px;}
 table{width:100%;border-collapse:collapse;}
-th{background:#0d0f12;color:white;padding:10px 14px;text-align:left;font-size:11px;font-family:monospace;letter-spacing:0.05em;}
+th{background:#0f1729;color:white;padding:10px 14px;text-align:left;font-size:11px;letter-spacing:0.05em;}
 td{padding:10px 14px;border-bottom:1px solid #eee;font-size:13px;vertical-align:top;}
 .done{text-decoration:line-through;color:#999;}
 .must{color:#c0392b;font-weight:600;}
@@ -192,14 +192,14 @@ ${rows.map(r => `<tr>
 }
 
 export default function BuildTrack() {
-  const [stage, setStage]       = useState('pre-concept');
-  const [region, setRegion]     = useState('');
-  const [country, setCountry]   = useState('');
-  const [sector, setSector]     = useState('');
-  const [toolType, setToolType] = useState('');
-  const [desc, setDesc]         = useState('');
-  const [results, setResults]   = useState(null);
-  const [checked, setChecked]   = useState({});
+  const [stage, setStage]         = useState('pre-concept');
+  const [region, setRegion]       = useState('');
+  const [country, setCountry]     = useState('');
+  const [sector, setSector]       = useState('');
+  const [toolType, setToolType]   = useState('');
+  const [desc, setDesc]           = useState('');
+  const [results, setResults]     = useState(null);
+  const [checked, setChecked]     = useState({});
   const [citeModal, setCiteModal] = useState(null);
 
   const stageIdx = STAGE_ORDER.indexOf(stage);
@@ -215,7 +215,7 @@ export default function BuildTrack() {
 
   function runCheck() {
     if (!country || !sector) { alert('Please select a country and sector.'); return; }
-    const sectorKey  = SECTOR_MAP[sector] || 'general';
+    const sectorKey   = SECTOR_MAP[sector] || 'general';
     const countryData = CDB[country] || CDB['default'];
     const sectorData  = countryData[sectorKey] || countryData['general'] || CDB['default']['general'];
     setChecked({});
@@ -235,17 +235,29 @@ export default function BuildTrack() {
     return { must, should };
   }, [results, stageIdx]);
 
-  const doneCount  = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
+  const doneCount   = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
   const totalActive = counts.must + counts.should;
-  const pct        = totalActive > 0 ? Math.round((doneCount / totalActive) * 100) : 0;
+  const pct         = totalActive > 0 ? Math.round((doneCount / totalActive) * 100) : 0;
 
-  const inputStyle = { width:'100%', padding:'10px 12px', border:'1.5px solid var(--border)', background:'white', fontFamily:'var(--font)', fontSize:13, color:'var(--text)', outline:'none', appearance:'none' };
-  const labelStyle = { display:'block', fontFamily:'var(--font)', fontSize:11, fontWeight:600, letterSpacing:'0.05em', textTransform:'uppercase', color:'var(--text2)', marginBottom:6 };
+  const inputStyle = {
+    width: '100%', padding: '10px 12px',
+    border: '1.5px solid var(--border)',
+    background: 'white',
+    fontFamily: 'var(--font)', fontSize: 13, color: 'var(--text)',
+    outline: 'none', appearance: 'none',
+  };
+
+  const labelStyle = {
+    display: 'block',
+    fontFamily: 'var(--font)', fontSize: 11, fontWeight: 600,
+    letterSpacing: '0.05em', textTransform: 'uppercase',
+    color: 'var(--text2)', marginBottom: 6,
+  };
 
   function SelectField({ value, onChange, placeholder, children }) {
     return (
-      <div style={{ position:'relative' }}>
-        <select value={value} onChange={e => onChange(e.target.value)} style={{ ...inputStyle, paddingRight:32 }}>
+      <div style={{ position: 'relative' }}>
+        <select value={value} onChange={e => onChange(e.target.value)} style={{ ...inputStyle, paddingRight: 32 }}>
           <option value="">{placeholder}</option>
           {children}
         </select>
@@ -256,7 +268,7 @@ export default function BuildTrack() {
 
   return (
     <div>
-      <div style={{ marginBottom:24 }}>
+      <div style={{ marginBottom: 24 }}>
         <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:22, marginBottom:6 }}>Build &amp; Track</h2>
         <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:14 }}>Complete your profile, run the compliance check, and track your obligations — all in one place.</p>
       </div>
@@ -269,7 +281,7 @@ export default function BuildTrack() {
           <SectionLabel style={{ marginBottom:10 }}>Development Stage</SectionLabel>
           <div style={{ display:'flex', border:'1.5px solid var(--border)', marginBottom:12, overflow:'hidden' }}>
             {STAGES.map(s => (
-              <button key={s.id} onClick={() => { setStage(s.id); }}
+              <button key={s.id} onClick={() => setStage(s.id)}
                 style={{ flex:1, padding:'10px 4px', fontFamily:'var(--font)', fontSize:9, fontWeight:600, textAlign:'center', cursor:'pointer', background: stage === s.id ? 'var(--ink)' : 'none', border:'none', borderRight:'1px solid var(--border)', color: stage === s.id ? 'white' : 'var(--text3)', transition:'all 0.15s', lineHeight:1.4 }}>
                 <span style={{ display:'block', fontFamily:'var(--font-mono)', fontSize:8, opacity:0.6, marginBottom:2 }}>{s.num}</span>
                 {s.label}
@@ -277,7 +289,7 @@ export default function BuildTrack() {
             ))}
           </div>
 
-          <div style={{ fontFamily:'var(--font)', fontSize:12, color:'var(--text3)', marginBottom:20, padding:10, background:'var(--surface2)', borderLeft:'3px solid var(--accent2)', fontStyle:'italic', lineHeight:1.6 }}>
+          <div style={{ fontFamily:'var(--font)', fontSize:12, color:'var(--text3)', marginBottom:20, padding:10, background:'var(--surface2)', borderLeft:'3px solid #4f8ef7', fontStyle:'italic', lineHeight:1.6 }}>
             {STAGE_HINTS[stage]}
           </div>
 
@@ -316,7 +328,7 @@ export default function BuildTrack() {
               style={{ ...inputStyle, minHeight:80, resize:'vertical' }} />
           </div>
 
-          <button onClick={runCheck} style={{ width:'100%', padding:'12px 20px', background:'var(--accent)', color:'white', border:'none', fontFamily:'var(--font)', fontSize:13, fontWeight:600, cursor:'pointer', letterSpacing:'0.02em', display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
+          <button onClick={runCheck} style={{ width:'100%', padding:'12px 20px', background:'var(--ink)', color:'white', border:'none', fontFamily:'var(--font)', fontSize:13, fontWeight:600, cursor:'pointer', letterSpacing:'0.02em', display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
             ▶ &nbsp;Run Compliance Check
           </button>
         </div>
@@ -331,7 +343,6 @@ export default function BuildTrack() {
             </div>
           ) : (
             <>
-              {/* Result header */}
               <div style={{ background:'var(--ink)', color:'white', padding:'24px 28px' }}>
                 <h2 style={{ fontFamily:'var(--font-display)', color:'white', fontSize:18, fontWeight:700, marginBottom:4 }}>
                   {results.country} · {SECTORS.find(s => s.value === results.sector)?.label} · {STAGES.find(s => s.id === stage)?.label} Stage
@@ -343,8 +354,8 @@ export default function BuildTrack() {
 
                 <div style={{ display:'flex', gap:32, marginTop:20 }}>
                   {[
-                    { n: counts.must,               l: 'MUST obligations' },
-                    { n: counts.should,             l: 'SHOULD obligations' },
+                    { n: counts.must,                l: 'MUST obligations' },
+                    { n: counts.should,              l: 'SHOULD obligations' },
                     { n: results.regulations.length, l: 'Regulations / Standards' },
                   ].map(k => (
                     <div key={k.l}>
@@ -360,17 +371,16 @@ export default function BuildTrack() {
                     <span>{pct}%</span>
                   </div>
                   <div style={{ height:4, background:'rgba(255,255,255,0.15)' }}>
-                    <div style={{ height:'100%', background:'#34d399', width:`${pct}%`, transition:'width 0.5s' }} />
+                    <div style={{ height:'100%', background:'#4f8ef7', width:`${pct}%`, transition:'width 0.5s' }} />
                   </div>
                 </div>
               </div>
 
-              {/* Body */}
               <div style={{ paddingTop:24 }}>
                 {!results.hasDetailedData && (
-                  <div style={{ marginBottom:16, padding:'12px 16px', background:'var(--amber-light)', borderLeft:'3px solid var(--amber)', fontFamily:'var(--font)', fontSize:13, lineHeight:1.6 }}>
+                  <div style={{ marginBottom:16, padding:'12px 16px', background:'#fef3e2', borderLeft:'3px solid #b45309', fontFamily:'var(--font)', fontSize:13, lineHeight:1.6 }}>
                     <strong>Note:</strong> Detailed sector-specific data for {results.country} is in development. Obligations shown reflect the international standards baseline (ISO 42001, NIST AI RMF).{' '}
-                    <a href={`mailto:advisory@algoviva.com?subject=Advisory - ${results.country}`} style={{ color:'var(--accent2)', fontWeight:600 }}>Book a call with AlgoViva</a> for a tailored review.
+                    <a href={`mailto:advisory@algoviva.com?subject=Advisory - ${results.country}`} style={{ color:'#4f8ef7', fontWeight:600 }}>Book a call with AlgoViva</a> for a tailored review.
                   </div>
                 )}
 
@@ -400,11 +410,10 @@ export default function BuildTrack() {
         </div>
       </div>
 
-      {/* Citation Modal */}
       <Modal open={!!citeModal} onClose={() => setCiteModal(null)} title={citeModal?.ref} subtitle="Source Reference">
         {citeModal && (
           <>
-            <div style={{ background:'var(--surface2)', padding:16, borderLeft:'3px solid var(--accent2)', fontFamily:'var(--font)', fontSize:13, lineHeight:1.7 }}>
+            <div style={{ background:'var(--surface2)', padding:16, borderLeft:'3px solid #4f8ef7', fontFamily:'var(--font)', fontSize:13, lineHeight:1.7 }}>
               {citeModal.text}
             </div>
             <p style={{ fontFamily:'var(--font)', fontSize:11, color:'var(--text3)', marginTop:12 }}>
