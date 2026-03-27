@@ -1,16 +1,47 @@
 :root {
-  --ink: #0d0f12; --ink2: #1a1d23; --surface: #f4f2ee; --surface2: #eae7e1;
-  --border: #d4cfc8; --text: #0d0f12; --text2: #4a4640; --text3: #7a756e;
-  --accent: #1a3a2a; --accent2: #2d5c42; --accent-light: #e8f0eb;
-  --red: #b33a2a; --red-light: #fce8e5; --amber: #b87320; --amber-light: #fef0e0;
-  --blue: #1e3a5f; --blue-light: #e5edf5;
-  --shadow: 0 2px 12px rgba(0,0,0,0.08); --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --ink: #0d0f12;
+  --ink2: #1a1d23;
+  --surface: #f5f5f5;
+  --surface2: #ebebeb;
+  --surface3: #e0e0e0;
+  --border: #d6d6d6;
+  --text: #0d0f12;
+  --text2: #444;
+  --text3: #888;
+  --accent: #1a3a2a;
+  --accent2: #2d5c42;
+  --accent-light: #e6f0ea;
+  --red: #c0392b;
+  --red-light: #fdf0ee;
+  --amber: #b45309;
+  --amber-light: #fef3e2;
+  --blue: #1e3a5f;
+  --blue-light: #e8eef6;
+  --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter Tight', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Mono', monospace;
 }
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Syne', sans-serif; background: var(--surface); color: var(--text); min-height: 100vh; font-size: 14px; line-height: 1.6; }
-button { font-family: 'Syne', sans-serif; }
+
+body {
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button { font-family: var(--font); }
 a { color: inherit; }
+
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-.fade-in { animation: fadeIn 0.3s ease; }
+.fade-in { animation: fadeIn 0.25s ease; }
