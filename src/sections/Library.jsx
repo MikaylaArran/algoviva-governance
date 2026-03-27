@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { LIBRARY } from '../data';
-import { Tag, FilterBtn, SectionLabel, Modal } from '../components/UI';
+import { Tag, FilterBtn, SectionLabel, Modal, Btn } from '../components/UI';
 
 const CAT_FILTERS = [
   { id: 'all',           label: 'All' },
