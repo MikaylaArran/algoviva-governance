@@ -191,7 +191,7 @@ ${rows.map(r => `<tr>
   if (w) { w.document.write(html); w.document.close(); setTimeout(() => w.print(), 500); }
 }
 
-export default function BuildTrack() {
+export default function BuildTrack({ isMobile }) {
   const [stage, setStage]         = useState('pre-concept');
   const [region, setRegion]       = useState('');
   const [country, setCountry]     = useState('');
@@ -269,20 +269,25 @@ export default function BuildTrack() {
   return (
     <div>
       <div style={{ marginBottom:24 }}>
-        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:22, marginBottom:6 }}>Build &amp; Track</h2>
+        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(18px, 4vw, 22px)', marginBottom:6 }}>Build &amp; Track</h2>
         <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:14 }}>Complete your profile, run the compliance check, and track your obligations — all in one place.</p>
       </div>
 
-      <div className="bt-layout" style={{ display:'grid', gridTemplateColumns:'360px 1fr', gap:24, alignItems:'flex-start' }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '360px 1fr',
+        gap: 24,
+        alignItems: 'flex-start',
+      }}>
 
         {/* ── FORM ── */}
-        <div style={{ background:'white', border:'1px solid var(--border)', padding:24 }}>
+        <div style={{ background:'white', border:'1px solid var(--border)', padding: isMobile ? 16 : 24 }}>
 
           <SectionLabel style={{ marginBottom:10 }}>Development Stage</SectionLabel>
           <div style={{ display:'flex', border:'1.5px solid var(--border)', marginBottom:12, overflow:'hidden' }}>
             {STAGES.map(s => (
               <button key={s.id} onClick={() => setStage(s.id)}
-                style={{ flex:1, padding:'10px 2px', fontFamily:'var(--font)', fontSize:9, fontWeight:600, textAlign:'center', cursor:'pointer', background: stage === s.id ? 'var(--ink)' : 'none', border:'none', borderRight:'1px solid var(--border)', color: stage === s.id ? 'white' : 'var(--text3)', transition:'all 0.15s', lineHeight:1.4 }}>
+                style={{ flex:1, padding:'10px 2px', fontFamily:'var(--font)', fontSize: isMobile ? 8 : 9, fontWeight:600, textAlign:'center', cursor:'pointer', background: stage === s.id ? 'var(--ink)' : 'none', border:'none', borderRight:'1px solid var(--border)', color: stage === s.id ? 'white' : 'var(--text3)', transition:'all 0.15s', lineHeight:1.4 }}>
                 <span style={{ display:'block', fontFamily:'var(--font-mono)', fontSize:8, opacity:0.6, marginBottom:2 }}>{s.num}</span>
                 {s.label}
               </button>
@@ -336,15 +341,15 @@ export default function BuildTrack() {
         {/* ── RESULTS ── */}
         <div>
           {!results ? (
-            <div style={{ background:'white', border:'2px dashed var(--border)', padding:'clamp(24px, 5vw, 48px)', textAlign:'center' }}>
+            <div style={{ background:'white', border:'2px dashed var(--border)', padding: isMobile ? 24 : 48, textAlign:'center' }}>
               <div style={{ fontSize:36, marginBottom:12 }}>⚖</div>
               <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:16, marginBottom:8 }}>Your compliance brief will appear here</h3>
               <p style={{ fontFamily:'var(--font)', color:'var(--text2)', fontSize:13, lineHeight:1.6 }}>Complete the form and run the check to see your tailored obligations, stage-by-stage requirements, and tracking checklist.</p>
             </div>
           ) : (
             <>
-              <div style={{ background:'var(--ink)', color:'white', padding:'24px 28px' }}>
-                <h2 style={{ fontFamily:'var(--font-display)', color:'white', fontSize:'clamp(15px, 3vw, 18px)', fontWeight:700, marginBottom:4 }}>
+              <div style={{ background:'var(--ink)', color:'white', padding: isMobile ? '20px 16px' : '24px 28px' }}>
+                <h2 style={{ fontFamily:'var(--font-display)', color:'white', fontSize:'clamp(14px, 3vw, 18px)', fontWeight:700, marginBottom:4 }}>
                   {results.country} · {SECTORS.find(s => s.value === results.sector)?.label} · {STAGES.find(s => s.id === stage)?.label} Stage
                 </h2>
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(255,255,255,0.5)' }}>
@@ -352,14 +357,14 @@ export default function BuildTrack() {
                   Generated {new Date().toLocaleDateString('en-ZA', { day:'numeric', month:'long', year:'numeric' })}
                 </div>
 
-                <div style={{ display:'flex', gap:'clamp(16px, 3vw, 32px)', marginTop:20, flexWrap:'wrap' }}>
+                <div style={{ display:'flex', gap: isMobile ? 16 : 32, marginTop:20, flexWrap:'wrap' }}>
                   {[
-                    { n: counts.must,                l: 'MUST obligations' },
-                    { n: counts.should,              l: 'SHOULD obligations' },
-                    { n: results.regulations.length, l: 'Regulations / Standards' },
+                    { n: counts.must,                l: 'MUST' },
+                    { n: counts.should,              l: 'SHOULD' },
+                    { n: results.regulations.length, l: 'Regulations' },
                   ].map(k => (
                     <div key={k.l}>
-                      <div style={{ fontFamily:'var(--font-display)', fontSize:'clamp(24px, 4vw, 32px)', fontWeight:800, color:'white', lineHeight:1 }}>{k.n}</div>
+                      <div style={{ fontFamily:'var(--font-display)', fontSize: isMobile ? 24 : 32, fontWeight:800, color:'white', lineHeight:1 }}>{k.n}</div>
                       <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(255,255,255,0.4)', letterSpacing:1 }}>{k.l}</div>
                     </div>
                   ))}
@@ -376,7 +381,7 @@ export default function BuildTrack() {
                 </div>
               </div>
 
-              <div style={{ paddingTop:24 }}>
+              <div style={{ paddingTop:20 }}>
                 {!results.hasDetailedData && (
                   <div style={{ marginBottom:16, padding:'12px 16px', background:'#fef3e2', borderLeft:'3px solid #b45309', fontFamily:'var(--font)', fontSize:13, lineHeight:1.6 }}>
                     <strong>Note:</strong> Detailed sector-specific data for {results.country} is in development. Obligations shown reflect the international standards baseline (ISO 42001, NIST AI RMF).{' '}
@@ -395,11 +400,11 @@ export default function BuildTrack() {
                 <div style={{ display:'flex', gap:10, flexWrap:'wrap', marginTop:20 }}>
                   <button onClick={() => downloadChecklist(results.country, results.sector, stage, results.regulations, checked, stageIdx)}
                     style={{ padding:'8px 16px', background:'white', border:'1.5px solid var(--ink)', fontFamily:'var(--font)', fontSize:12, fontWeight:600, cursor:'pointer' }}>
-                    ↓ Download Checklist (Print / PDF)
+                    ↓ Download Checklist
                   </button>
                   <a href={`mailto:advisory@algoviva.com?subject=Advisory - ${results.country} / ${results.sector}`}
                     style={{ padding:'8px 16px', background:'var(--ink)', color:'white', fontFamily:'var(--font)', fontSize:12, fontWeight:600, textDecoration:'none', display:'inline-flex', alignItems:'center' }}>
-                    Book AlgoViva Advisory Call
+                    Book Advisory Call
                   </a>
                 </div>
 
@@ -422,12 +427,6 @@ export default function BuildTrack() {
           </>
         )}
       </Modal>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .bt-layout { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </div>
   );
 }
